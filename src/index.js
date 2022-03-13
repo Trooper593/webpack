@@ -1,5 +1,5 @@
-import Post from './Post';
-import './styles/styles.css';
+import Post from '@/Post';
+import '@/styles/styles.css';
 
 const post = new Post('First post');
 
