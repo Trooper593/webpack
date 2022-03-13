@@ -1,4 +1,5 @@
 @import 'roboto.css';
+@import '~normalize.css'; /* ~ значит искать в папке /node_modules/ */
 
 body{
     font-family: 'Roboto', sans-serif;
