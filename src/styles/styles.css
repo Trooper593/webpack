@@ -7,3 +7,9 @@
 h1{
     text-align: center;
 }
+
+.logo{
+    background-url("../assets/webpack-icon.svg");
+    height: 200px;
+    width: 200px;
+}
