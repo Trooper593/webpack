@@ -9,9 +9,14 @@
     "watch": "npx cross-env NODE_ENV=development webpack --mode development --watch",
     "start": "npx cross-env NODE_ENV=development webpack-dev-server --mode development --open --hot"
   },
+  "browserslist": ">0.25%, not dead",
   "author": "Dmitry Kuznetsov",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.17.7",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.4",
     "cross-env": "^7.0.3",
