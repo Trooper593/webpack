@@ -1,5 +1,6 @@
 import Post from '@/Post';
 import '@/styles/styles.css';
+import '@/styles/less.less';
 import * as $ from 'jquery';
 
 const post = new Post('First post');
