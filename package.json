@@ -40,8 +40,6 @@
     "xml-loader": "^1.2.1"
   },
   "dependencies": {
-    "jquery": "^3.6.0",
-    "normalize.css": "^8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
