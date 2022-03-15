@@ -3,7 +3,7 @@ import styles from './hello.module.css';
 
 export default function ({name = 'user'}){
     return <div className={styles.box}>
-        <h2 className={styles.alert}>Hello, {name}</h2>
+        <h2 className={`my-class ${styles.alert}`}>Hello, {name}</h2>
         <p>Welcome to site!</p>
     </div>
 }
