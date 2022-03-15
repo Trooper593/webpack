@@ -7,7 +7,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
+const filename = ext => isDev ? `[name].${ext}` : `[name].[fullhash].${ext}`
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -39,7 +39,6 @@ module.exports = {
         port: 4200,
         hot: isDev
     },
-    devtool: isDev ? 'source-map' : '',
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html',
@@ -55,7 +54,21 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.module\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                localIdentName: '[local]__[sha1:hash:hex:7]'
+                            }
+                        }
+                    }
+                ],
+            },
+            {
+                test: /^((?!\.module).)*css$/,
                 use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
             {
@@ -84,7 +97,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env'],
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
                         plugins: ['@babel/plugin-proposal-class-properties']
                     }
                 }
