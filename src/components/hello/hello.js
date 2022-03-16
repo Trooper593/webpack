@@ -1,9 +1,17 @@
-import React from 'react';
-import styles from './hello.module.css';
+import React, {useRef, useState, useEffect} from 'react';
 
-export default function ({name = 'user'}){
-    return <div className={styles.box}>
-        <h2 className={`my-class ${styles.alert}`}>Hello, {name}</h2>
-        <p>Welcome to site!</p>
+export default function ({ min, max, cnt }){
+
+    let [value, setValue] = useState(cnt);
+
+    //вместо этого просто ставим key={pr.cnt} в родительском компоненте
+    // useEffect(() => {
+    //     setValue(cnt);
+    // }, [cnt]);
+
+    return <div>
+        <div>min: {min}</div>
+        <div>max: {max}</div>
+        <div>cnt: {value}</div>
     </div>
 }

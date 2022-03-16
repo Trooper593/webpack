@@ -1,14 +1,11 @@
 import './assets/main.css';
 import React from "react";
 import ReactDom from 'react-dom';
-import AppHello from './components/hello/hello';
+import App from './App';
 
 document.addEventListener('DOMContentLoaded', function(){
     ReactDom.render(
-        <>
-            <AppHello />
-            <AppHello name="Dmitry"/>
-        </>,
+        <App />,
         document.querySelector('.app')
     );
 })
