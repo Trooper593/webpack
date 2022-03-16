@@ -58,6 +58,7 @@ function App() {
                     max={pr.max}
                     cnt={pr.cnt}
                     key={pr.cnt} //вместо useEffect
+                    onChange={val => changeCnt(pr.id, val)}
                 />
             </td>
         </tr>

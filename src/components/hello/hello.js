@@ -1,17 +1,20 @@
 import React, {useRef, useState, useEffect} from 'react';
 
-export default function ({ min, max, cnt }){
+export default function ({ min, max, cnt, onChange}){
 
-    let [value, setValue] = useState(cnt);
+    let inp = useRef();
+
+    let updInp = num => {
+        inp.current.value = num;
+        onChange(num);
+    };
 
     //вместо этого просто ставим key={pr.cnt} в родительском компоненте
-    // useEffect(() => {
-    //     setValue(cnt);
-    // }, [cnt]);
+    //useEffect(() => updInp(cnt), [cnt]);
 
     return <div>
         <div>min: {min}</div>
         <div>max: {max}</div>
-        <div>cnt: {value}</div>
+        <div><input ref={inp} defaultValue={cnt} onChange={(e) => updInp(e.target.value)}/></div>
     </div>
 }
