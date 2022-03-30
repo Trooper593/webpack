@@ -7,30 +7,41 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
+const filename = ext => isDev ? `[name].${ext}` : `[name].[fullhash].${ext}`
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
-        main: ['@babel/polyfill', './index.js'],
-        analytics: './analytics.js',
-        typetest: './typetest.ts'
+        main: ['@babel/polyfill', './index.tsx'],
     },
     output: {
         filename: filename('js'),
         path: path.resolve(__dirname, 'dist')
     },
     resolve:{
-        extensions: ['.js', '.json', '.png'],
+        extensions: ['.tsx', '.ts', '.js', '.json', '.png'],
         alias: {
-            '@models': path.resolve(__dirname, 'src/models'),
             '@': path.resolve(__dirname, 'src'),
         }
     },
     optimization: {
         splitChunks: {
-            chunks: 'all'
+            cacheGroups: {
+                vendors: {
+                    name: `chunk-vendors`,
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    chunks: 'initial'
+                },
+                common: {
+                    name: `chunk-common`,
+                    minChunks: 2,
+                    priority: -20,
+                    chunks: 'initial',
+                    reuseExistingChunk: true
+                }
+            }
         },
         minimizer: [
             // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
@@ -42,7 +53,6 @@ module.exports = {
         port: 4200,
         hot: isDev
     },
-    devtool: isDev ? 'source-map' : '',
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html',
@@ -51,13 +61,6 @@ module.exports = {
             }
         }),
         new CleanWebpackPlugin(),
-        new CopyWebpackPlugin({
-            patterns: [
-            {
-                from: path.resolve(__dirname, 'src/favicon.ico'),
-                to: path.resolve(__dirname, 'dist')
-            }
-        ]}),
         new MiniCssExtractPlugin({
             filename: filename('css')
         }),
@@ -65,7 +68,22 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.module\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 0, //post css 1, post css && sass 2
+                            modules: {
+                                localIdentName: '[local]__[sha1:hash:hex:7]'
+                            }
+                        }
+                    }
+                ],
+            },
+            {
+                test: /^((?!\.module).)*css$/,
                 use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
             {
@@ -94,7 +112,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env'],
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
                         plugins: ['@babel/plugin-proposal-class-properties']
                     }
                 }
@@ -119,7 +137,18 @@ module.exports = {
                         presets: ['@babel/preset-react'],
                     }
                 }
-            }
+            },
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
+                }
+            },
         ]
     }
 }
