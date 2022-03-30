@@ -20,7 +20,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     resolve:{
-        extensions: ['.js', '.json', '.png', '.tsx'],
+        extensions: ['.tsx', '.ts', '.js', '.json', '.png'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
         }
@@ -137,7 +137,18 @@ module.exports = {
                         presets: ['@babel/preset-react'],
                     }
                 }
-            }
+            },
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
+                }
+            },
         ]
     }
 }

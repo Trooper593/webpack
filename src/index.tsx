@@ -1,8 +1,9 @@
-import './assets/main.css';
-import React from "react";
-import ReactDom from 'react-dom';
-import AppHello from './components/hello/hello';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from './App';
+import { Hello } from './components/hello/hello';
 
-document.addEventListener('DOMContentLoaded', function(){
-    
-})
+ReactDOM.render(
+  <Hello />,
+  document.getElementById('app'),
+);
