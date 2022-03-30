@@ -13,14 +13,14 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
-        main: ['@babel/polyfill', './index.js'],
+        main: ['@babel/polyfill', './index.tsx'],
     },
     output: {
         filename: filename('js'),
         path: path.resolve(__dirname, 'dist')
     },
     resolve:{
-        extensions: ['.js', '.json', '.png'],
+        extensions: ['.js', '.json', '.png', '.tsx'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
         }

@@ -1,9 +1,0 @@
-import React from 'react';
-import styles from './hello.module.css';
-
-export default function ({name = 'user'}){
-    return <div className={styles.box}>
-        <h2 className={`my-class ${styles.alert}`}>Hello, {name}</h2>
-        <p>Welcome to site!</p>
-    </div>
-}
